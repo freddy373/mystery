@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sokhna AI</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#001f3f,#0074D9,#7FDBFF);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    color:white;
+}
+
+.chatbox{
+    width:95%;
+    max-width:800px;
+    height:85vh;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    border:1px solid rgba(255,255,255,0.2);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 0 40px rgba(0,0,0,0.3);
+}
+
+.header{
+    padding:20px;
+    text-align:center;
+    background:rgba(255,255,255,0.08);
+    font-size:28px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.messages{
+    flex:1;
+    padding:20px;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.message{
+    max-width:75%;
+    padding:15px 20px;
+    border-radius:20px;
+    line-height:1.5;
+    animation:fadeIn 0.3s ease;
+}
+
+.ai{
+    background:rgba(255,255,255,0.15);
+    align-self:flex-start;
+}
+
+.user{
+    background:#2ECC40;
+    align-self:flex-end;
+}
+
+.inputArea{
+    display:flex;
+    padding:20px;
+    gap:10px;
+    background:rgba(255,255,255,0.08);
+}
+
+input{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    outline:none;
+    font-size:16px;
+}
+
+button{
+    padding:15px 25px;
+    border:none;
+    border-radius:12px;
+    background:#0074D9;
+    color:white;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="chatbox">
+
+    <div class="header">
+        SOKHNA AI NEGOTIATOR 🤖🌊
+    </div>
+
+    <div class="messages" id="messages">
+
+        <div class="message ai">
+            Hello. I am the Sokhna Decision AI.
+            <br><br>
+            I detected resistance toward the vacation.
+            <br><br>
+            May I ask...
+            <br><br>
+            Why don't you want to go?
+        </div>
+
+    </div>
+
+    <div class="inputArea">
+        <input type="text" id="userInput" placeholder="Type your answer...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+</div>
+
+<script>
+
+const messages = document.getElementById("messages");
+const input = document.getElementById("userInput");
+
+let step = 0;
+
+const aiQuestions = [
+
+    "Interesting... but what exactly is bothering you about the trip?",
+
+    "What would make the trip more enjoyable for you?",
+
+    "If there was good food, better music, and relaxing time... would that help?",
+
+    "Do you think staying home would actually be more fun?",
+
+    "On a scale from 1 to 10, how badly do you need a break?",
+
+    "Final question... deep inside... don't you kinda want to go? 👀"
+
+];
+
+const aiResponses = [
+
+    "I understand your point of view. However, after analyzing thousands of vacation behavior patterns, people usually feel much happier after taking a break near the sea.",
+
+    "That is actually a reasonable concern. Still, temporary discomfort like packing or driving is often outweighed by relaxation, food, swimming, and family memories.",
+
+    "Interesting response detected. Your answer suggests possible hidden vacation interest, even if you are not fully admitting it yet.",
+
+    "Processing emotional indicators... It appears stress and boredom levels may currently be higher than recommended.",
+
+    "From a psychological perspective, staying home often sounds better at first, but people usually regret missing enjoyable trips afterward.",
+
+    "Your argument has been accepted by the AI system. Unfortunately for you, the system still believes Sokhna would improve your mood significantly.",
+
+    "Behavioral analysis shows that beach environments help people relax faster than staying inside the house all day.",
+
+    "The AI has considered your response carefully. Current results indicate a strong possibility that you simply need rest and a change of atmosphere.",
+
+    "That answer was surprisingly valid. Even so, sea views, snacks, music, and sleeping without responsibilities remain powerful counterarguments.",
+
+    "Running advanced vacation simulations... Every simulation somehow ends with you enjoying Sokhna.",
+
+    "The system detects resistance. This usually happens when a human secretly wants to go but does not want to admit it immediately.",
+
+    "Your response has increased the AI's confidence that this trip could create memorable moments for everyone involved.",
+
+    "Analyzing... analyzing... The data continues to suggest that refusing the trip may lead to unnecessary boredom and possible regret.",
+
+    "Vacation intelligence module activated. Conclusion so far: the benefits of Sokhna appear to greatly exceed the benefits of staying home.",
+
+    "The AI respects your opinion. However, statistically speaking, beaches are cooler than sitting inside scrolling all day."
+];
+
+function addMessage(text, type){
+
+    const div = document.createElement("div");
+
+    div.classList.add("message");
+    div.classList.add(type);
+
+    div.innerHTML = text;
+
+    messages.appendChild(div);
+
+    messages.scrollTop = messages.scrollHeight;
+}
+
+function sendMessage(){
+
+    const userText = input.value.trim();
+
+    if(userText === "") return;
+
+    addMessage(userText, "user");
+
+    input.value = "";
+
+    setTimeout(() => {
+
+        let response = aiResponses[Math.floor(Math.random() * aiResponses.length)];
+
+        addMessage(response, "ai");
+
+        setTimeout(() => {
+
+            if(step < aiQuestions.length){
+
+                addMessage(aiQuestions[step], "ai");
+
+                step++;
+
+            }else{
+
+                addMessage(`
+                <b>FINAL AI CONCLUSION:</b>
+                <br><br>
+
+                After carefully analyzing all responses...
+                <br><br>
+
+                There is a <span style="color:#2ECC40; font-size:28px;">
+                99.3%
+                </span>
+
+                probability that going to Sokhna will
+                improve happiness levels dramatically.
+                <br><br>
+
+                Recommendation:
+                <br>
+                GO TO SOKHNA 🌊
+                `, "ai");
+
+            }
+
+        }, 1200);
+
+    }, 800);
+}
+
+input.addEventListener("keypress", function(event){
+
+    if(event.key === "Enter"){
+        sendMessage();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
