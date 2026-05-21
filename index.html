@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sokhna AI Analyzer</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    background:linear-gradient(135deg,#001f3f,#0074D9,#7FDBFF);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:white;
+    overflow-y:auto;
+    padding:40px 0;
+}
+
+.container{
+    width:90%;
+    max-width:700px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:25px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 0 40px rgba(0,0,0,0.3);
+}
+
+h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    opacity:0.8;
+    margin-bottom:30px;
+}
+
+.question{
+    margin-top:20px;
+    font-size:22px;
+}
+
+.buttons{
+    margin-top:20px;
+}
+
+button{
+    padding:14px 24px;
+    margin:10px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.yes{
+    background:#2ECC40;
+    color:white;
+}
+
+.no{
+    background:#FF4136;
+    color:white;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+.hidden{
+    display:none;
+}
+
+.loader{
+    width:100%;
+    height:25px;
+    background:rgba(255,255,255,0.15);
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:30px;
+}
+
+.progress{
+    width:0%;
+    height:100%;
+    background:linear-gradient(to right,#2ECC40,#7FDBFF);
+    transition:0.2s;
+}
+
+.analysisText{
+    margin-top:20px;
+    font-size:20px;
+}
+
+.result{
+    margin-top:35px;
+    font-size:28px;
+    line-height:1.6;
+}
+
+.glow{
+    animation:glow 1s infinite alternate;
+}
+
+@keyframes glow{
+    from{ text-shadow:0 0 10px #7FDBFF; }
+    to{ text-shadow:0 0 25px white; }
+}
+
+#submitBtn{
+    margin-top:30px;
+    background:#0074D9;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="glow">SOKHNA AI ANALYZER</h1>
+    <p class="subtitle">Advanced Behavioral Vacation Intelligence System</p>
+
+    <div id="questions">
+
+        <div class="question">Are you tired from school/work?</div>
+        <div class="buttons"><button class="yes">Yes</button><button class="no">No</button></div>
+
+        <div class="question">Do you enjoy beaches?</div>
+        <div class="buttons"><button class="yes">Yes</button><button class="no">No</button></div>
+
+        <div class="question">Would staying home be boring?</div>
+        <div class="buttons"><button class="yes">Yes</button><button class="no">No</button></div>
+
+        <div class="question">Do you deserve a break?</div>
+        <div class="buttons"><button class="yes">Yes</button><button class="no">No</button></div>
+
+        <div class="question">Do you miss swimming?</div>
+        <div class="buttons"><button class="yes">Yes</button><button class="no">No</button></div>
+
+        <div class="question">Would fresh sea air improve your mood?</div>
+        <div class="buttons"><button class="yes">Definitely</button><button class="no">Not Really</button></div>
+
+        <div class="question">Would eating snacks at the beach be amazing?</div>
+        <div class="buttons"><button class="yes">Obviously</button><button class="no">Maybe</button></div>
+
+        <div class="question">Are family memories important?</div>
+        <div class="buttons"><button class="yes">Yes</button><button class="no">Still Yes</button></div>
+
+        <div class="question">Do you secretly want to relax?</div>
+        <div class="buttons"><button class="yes">Caught Me</button><button class="no">No Comment</button></div>
+
+        <div class="question">Would Sokhna be better than staying inside all day?</div>
+        <div class="buttons"><button class="yes">100%</button><button class="no">Probably</button></div>
+
+        <!-- ✅ SUBMIT BUTTON -->
+        <button id="submitBtn">Submit Answers</button>
+
+    </div>
+
+    <div id="analyzing" class="hidden">
+
+        <h2>Analyzing Responses...</h2>
+
+        <div class="loader">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div class="analysisText" id="analysisText">
+            Starting AI Scan...
+        </div>
+
+    </div>
+
+    <div id="finalResult" class="hidden result"></div>
+
+</div>
+
+<script>
+
+const buttonGroups = document.querySelectorAll(".buttons");
+
+buttonGroups.forEach(group => {
+
+    const buttons = group.querySelectorAll("button");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            buttons.forEach(btn => {
+                btn.style.opacity = "0.4";
+                btn.style.transform = "scale(1)";
+                btn.style.boxShadow = "none";
+            });
+
+            button.style.opacity = "1";
+            button.style.transform = "scale(1.15)";
+            button.style.boxShadow = "0 0 25px white";
+
+        });
+
+    });
+
+});
+
+document.getElementById("submitBtn").addEventListener("click", () => {
+
+    document.getElementById("questions").classList.add("hidden");
+    document.getElementById("analyzing").classList.remove("hidden");
+
+    startAnalysis();
+
+});
+
+function startAnalysis(){
+
+    let progress = document.getElementById("progress");
+    let analysisText = document.getElementById("analysisText");
+
+    let width = 0;
+
+    let messages = [
+        "Scanning personality...",
+        "Checking happiness levels...",
+        "Comparing home vs beach...",
+        "Detecting vacation desire...",
+        "Running simulation...",
+        "Finalizing results..."
+    ];
+
+    let i = 0;
+
+    let interval = setInterval(() => {
+
+        width += 1;
+        progress.style.width = width + "%";
+
+        if(width % 15 === 0 && i < messages.length){
+            analysisText.innerHTML = messages[i];
+            i++;
+        }
+
+        if(width >= 100){
+            clearInterval(interval);
+
+            document.getElementById("analyzing").classList.add("hidden");
+
+            let result = document.getElementById("finalResult");
+            result.classList.remove("hidden");
+
+            result.innerHTML = `
+                <h2 class="glow">AI ANALYSIS COMPLETE</h2>
+                <br>
+                Vacation Desire Detected:
+                <br><br>
+                <span style="font-size:70px; color:#2ECC40;">99%</span>
+                <br><br>
+                GO TO SOKHNA 🌊
+            `;
+        }
+
+    }, 40);
+}
+
+</script>
+
+</body>
+</html>
