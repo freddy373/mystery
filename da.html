@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Experience</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#001f3f,#0074D9,#7FDBFF);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:90%;
+    max-width:800px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 0 40px rgba(0,0,0,0.4);
+    text-align:center;
+}
+
+h1{
+    font-size:32px;
+}
+
+.menu button{
+    display:block;
+    width:100%;
+    margin:10px 0;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    cursor:pointer;
+    background:#0074D9;
+    color:white;
+    transition:0.3s;
+}
+
+.menu button:hover{
+    transform:scale(1.03);
+}
+
+.page{
+    display:none;
+    animation:fade 0.5s ease-in-out;
+}
+
+.active{
+    display:block;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.small{
+    opacity:0.9;
+    font-size:18px;
+    line-height:1.6;
+}
+
+.card{
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    margin-top:15px;
+}
+
+button.action{
+    margin-top:15px;
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#2ECC40;
+    color:white;
+}
+
+button.back{
+    background:#FF4136;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🌊 Family Experience System</h1>
+
+<!-- MENU -->
+<div id="menu" class="page active menu">
+
+<p class="small">
+This is something I built to show how much I value family time.<br>
+You can explore each section step by step.
+</p>
+
+<button onclick="openPage('p1')">📘 Why This Matters</button>
+<button onclick="openPage('p2')">💙 Family Stress Check</button>
+<button onclick="openPage('p3')">🌴 Sokhna Idea</button>
+<button onclick="openPage('p4')">🧠 My Personal Message</button>
+<button onclick="openPage('p5')">✅ Final Decision</button>
+
+</div>
+
+<!-- PAGE 1 -->
+<div id="p1" class="page">
+
+<h2>📘 Why This Matters</h2>
+
+<div class="card small">
+Family time is not just “free time”.<br><br>
+
+It is the only moment where everything slows down — work, school, pressure — and we actually get to feel like a family again.<br><br>
+
+Even a short break can reset everything mentally and emotionally.
+</div>
+
+<button class="back" onclick="back()">⬅ Back</button>
+
+</div>
+
+<!-- PAGE 2 -->
+<div id="p2" class="page">
+
+<h2>💙 Family Stress Check</h2>
+
+<div class="card small">
+Be honest for a second:<br><br>
+
+- Work pressure is high<br>
+- School pressure is high<br>
+- Everyone is mentally tired<br><br>
+
+This is normal — but it means rest is important, not optional.
+</div>
+
+<button class="back" onclick="back()">⬅ Back</button>
+
+</div>
+
+<!-- PAGE 3 -->
+<div id="p3" class="page">
+
+<h2>🌴 Sokhna Idea</h2>
+
+<div class="card small">
+Imagine just a few days away:<br><br>
+
+- No rush<br>
+- No schedules<br>
+- Sea air<br>
+- Simple family time<br><br>
+
+Not a big trip — just a reset.
+</div>
+
+<button class="back" onclick="back()">⬅ Back</button>
+
+</div>
+
+<!-- PAGE 4 -->
+<div id="p4" class="page">
+
+<h2>🧠 My Message</h2>
+
+<div class="card small">
+I didn’t make this because I wanted to convince you with words.<br><br>
+
+I made this because I wanted to show effort.<br><br>
+
+I wanted you to see that this means something to me, not just as a trip — but as time together.
+</div>
+
+<button class="back" onclick="back()">⬅ Back</button>
+
+</div>
+
+<!-- PAGE 5 -->
+<div id="p5" class="page">
+
+<h2>✅ Final Decision</h2>
+
+<div class="card small">
+After going through everything…<br><br>
+
+What do you think?
+</div>
+
+<button onclick="yes()">Let’s Go 🌊</button>
+<button class="back" onclick="no()">Not Now</button>
+
+<p id="msg"></p>
+
+</div>
+
+</div>
+
+<script>
+
+let current = "menu";
+
+function openPage(id){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    current = id;
+}
+
+function back(){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById("menu").classList.add("active");
+}
+
+function yes(){
+    document.getElementById("msg").innerHTML =
+    "❤️ Thank you Dad. This means a lot to me.";
+}
+
+function no(){
+    document.getElementById("msg").innerHTML =
+    "❤️ I understand. I just wanted to show how important this is to me.";
+}
+
+</script>
+
+</body>
+</html>
