@@ -70,18 +70,24 @@ img{
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-emailjs.init("_YMl3xFyJ1I_XDZqB"); // 🔴 REPLACE THIS
+emailjs.init({
+    publicKey: "_YMl3xFyJ1I_XDZqB"
+});
 
-function sendEmail(decision){
+function sendEmail(decision) {
     emailjs.send("service_oqsq6gn", "template_9tzycye", {
         decision: decision,
         time: new Date().toLocaleString()
     })
-    .then(res => console.log("sent", res))
-    .catch(err => console.log("error", err));
+    .then((response) => {
+        console.log("EMAIL SENT ✅", response);
+    })
+    .catch((error) => {
+        console.log("EMAIL ERROR ❌", error);
+    });
 }
 
-function acceptDecision(){
+function acceptDecision() {
     sendEmail("YES");
 
     document.getElementById("questionSection").classList.add("hidden");
@@ -91,7 +97,7 @@ function acceptDecision(){
     document.getElementById("message").innerText = "LET'S GOOOO 🎉 Sokhna is happening!";
 }
 
-function rejectDecision(){
+function rejectDecision() {
     sendEmail("NO");
 
     document.getElementById("questionSection").classList.add("hidden");
@@ -101,6 +107,5 @@ function rejectDecision(){
     document.getElementById("message").innerText = "You rejected Sokhna 💔";
 }
 </script>
-
 </body>
 </html>
