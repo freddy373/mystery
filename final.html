@@ -191,7 +191,7 @@ button:hover{
 <script>
 
 function acceptDecision(){
-
+sendDecisionEmail("YES - He accepted Sokhna 🎉");
     document.getElementById("questionSection").classList.add("hidden");
     document.getElementById("resultSection").classList.remove("hidden");
 
@@ -219,6 +219,7 @@ function acceptDecision(){
 }
 
 function rejectDecision(){
+    sendDecisionEmail("NO - He rejected Sokhna 💔");
 
     document.getElementById("questionSection").classList.add("hidden");
     document.getElementById("resultSection").classList.remove("hidden");
@@ -332,7 +333,28 @@ function startSadSpeech(){
 
     }, 2500);
 }
+function sendDecisionEmail(decision){
 
+    emailjs.send(
+        "service_wecst4h",
+        "template_45fjb61",
+        {
+            decision: decision,
+            time: new Date().toLocaleString()
+        }
+    )
+    .then(function(response){
+
+        console.log("SUCCESS!", response);
+
+    })
+    .catch(function(error){
+
+        console.log("ERROR:", error);
+
+    });
+
+}
 </script>
 
 </body>
