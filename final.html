@@ -188,10 +188,16 @@ button:hover{
     <source src="https://www.soundjay.com/human/cheering-01.mp3" type="audio/mpeg">
 </audio>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
 
+emailjs.init("_YMl3xFyJ1I_XDZqB");
+
 function acceptDecision(){
-sendDecisionEmail("YES - He accepted Sokhna 🎉");
+
+    sendDecisionEmail("YES - He accepted Sokhna 🎉");
+
     document.getElementById("questionSection").classList.add("hidden");
     document.getElementById("resultSection").classList.remove("hidden");
 
@@ -219,6 +225,7 @@ sendDecisionEmail("YES - He accepted Sokhna 🎉");
 }
 
 function rejectDecision(){
+
     sendDecisionEmail("NO - He rejected Sokhna 💔");
 
     document.getElementById("questionSection").classList.add("hidden");
@@ -262,6 +269,29 @@ function rejectDecision(){
     `;
 
     startSadSpeech();
+}
+
+function sendDecisionEmail(decision){
+
+    emailjs.send(
+        "service_wecst4h",
+        "template_45fjb61",
+        {
+            decision: decision,
+            time: new Date().toLocaleString()
+        }
+    )
+    .then(function(response){
+
+        console.log("SUCCESS!", response);
+
+    })
+    .catch(function(error){
+
+        console.log("ERROR:", error);
+
+    });
+
 }
 
 function startConfetti(){
@@ -333,33 +363,7 @@ function startSadSpeech(){
 
     }, 2500);
 }
-function sendDecisionEmail(decision){
 
-    emailjs.send(
-        "service_wecst4h",
-        "template_45fjb61",
-        {
-            decision: decision,
-            time: new Date().toLocaleString()
-        }
-    )
-    .then(function(response){
-
-        console.log("SUCCESS!", response);
-
-    })
-    .catch(function(error){
-
-        console.log("ERROR:", error);
-
-    });
-
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-<script>
-emailjs.init("_YMl3xFyJ1I_XDZqB");
 </script>
 </body>
 </html>
