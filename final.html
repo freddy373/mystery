@@ -190,12 +190,25 @@ button:hover{
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
+emailjs.init("YOUR_PUBLIC_KEY"); // 🔴 replace this
 
-emailjs.init("_YMl3xFyJ1I_XDZqB");
+function sendDecisionEmail(decision) {
+    emailjs.send("service_wecst4h", "template_45fjb61", {
+        decision: decision,
+        time: new Date().toLocaleString()
+    })
+    .then((res) => {
+        console.log("EMAIL SENT ✅", res);
+    })
+    .catch((err) => {
+        console.log("EMAIL ERROR ❌", err);
+    });
+}
 
-function acceptDecision(){
-
+function acceptDecision() {
     sendDecisionEmail("YES - He accepted Sokhna 🎉");
 
     document.getElementById("questionSection").classList.add("hidden");
@@ -205,110 +218,51 @@ function acceptDecision(){
 
     document.getElementById("message").innerHTML = `
         <h2 style="font-size:45px;">LET'S GOOOO 🎉</h2>
-
         <br>
-
         You have officially made the correct life decision.
-
         <br><br>
-
         Happiness levels are now increasing rapidly.
-
         <br><br>
-
         Sokhna trip unlocked successfully 🌊
     `;
 
     document.getElementById("celebrationSound").play();
-
     startConfetti();
 }
 
-function rejectDecision(){
-
+function rejectDecision() {
     sendDecisionEmail("NO - He rejected Sokhna 💔");
 
     document.getElementById("questionSection").classList.add("hidden");
     document.getElementById("resultSection").classList.remove("hidden");
 
     document.getElementById("resultImage").src = "sad.jpeg";
-
     document.getElementById("character").classList.remove("hidden");
 
     document.getElementById("message").innerHTML = `
         <h2 style="font-size:40px;">Look what you have done...</h2>
-
         <br>
-
         This poor little man was dreaming about Sokhna.
-
         <br><br>
-
-        He imagined the beach...
-        the snacks...
-        the swimming...
-        the memories...
-
+        He imagined the beach... the snacks... the swimming... the memories...
         <br><br>
-
-        And now?
-        Everything is destroyed.
-
+        And now? Everything is destroyed.
         <br><br>
-
-        The AI has detected extreme sadness levels.
-
-        <br><br>
-
-        Studies show that saying "yes" could instantly
-        repair emotional damage.
-
-        <br><br>
-
-        Please reconsider your decision before it is too late 🥺
+        Please reconsider your decision 🥺
     `;
 
     startSadSpeech();
 }
 
-function sendDecisionEmail(decision){
-
-    emailjs.send(
-        "service_wecst4h",
-        "template_45fjb61",
-        {
-            decision: decision,
-            time: new Date().toLocaleString()
-        }
-    )
-    .then(function(response){
-
-        console.log("SUCCESS!", response);
-
-    })
-    .catch(function(error){
-
-        console.log("ERROR:", error);
-
-    });
-
-}
-
-function startConfetti(){
-
-    for(let i = 0; i < 150; i++){
-
+function startConfetti() {
+    for (let i = 0; i < 150; i++) {
         let confetti = document.createElement("div");
-
         confetti.classList.add("confetti");
 
         confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
 
-        confetti.style.animationDuration =
-        (Math.random() * 3 + 2) + "s";
-
-        confetti.style.background =
-        `hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
 
         document.body.appendChild(confetti);
 
@@ -318,34 +272,25 @@ function startConfetti(){
     }
 }
 
-function startSadSpeech(){
-
+function startSadSpeech() {
     const speeches = [
-
         "You really said no to this innocent child?",
-
         "He was already imagining himself at the beach.",
-
         "The sadness levels continue to increase.",
-
-        "Experts believe this could have been avoided by clicking YES.",
-
-        "Even the AI is disappointed right now.",
-
-        "There is still time to fix this terrible mistake."
+        "Experts say YES was the correct answer.",
+        "Even the AI is disappointed.",
+        "There is still time to fix this."
     ];
 
     let i = 0;
 
     const interval = setInterval(() => {
-
-        if(i >= speeches.length){
+        if (i >= speeches.length) {
             clearInterval(interval);
             return;
         }
 
         let speech = document.createElement("div");
-
         speech.style.marginTop = "15px";
         speech.style.fontSize = "22px";
         speech.style.opacity = "0";
@@ -360,10 +305,8 @@ function startSadSpeech(){
         }, 100);
 
         i++;
-
     }, 2500);
 }
-
 </script>
 </body>
 </html>
