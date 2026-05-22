@@ -21,6 +21,8 @@ function sendEmail(decision) {
     });
 }
 
+/* ================= YES ================= */
+
 function acceptDecision() {
     sendEmail("YES");
 
@@ -43,6 +45,8 @@ function acceptDecision() {
     startConfetti();
 }
 
+/* ================= NO (FULL ORIGINAL TEXT RESTORED) ================= */
+
 function rejectDecision() {
     sendEmail("NO");
 
@@ -54,22 +58,41 @@ function rejectDecision() {
 
     document.getElementById("message").innerHTML = `
         <h2 style="font-size:40px;">Look what you have done...</h2>
+
         <br>
+
         This poor little man was dreaming about Sokhna.
+
         <br><br>
-        He imagined the beach... the snacks... the swimming... the memories...
+
+        He imagined the beach...
+        the snacks...
+        the swimming...
+        the memories...
+
         <br><br>
-        And now? Everything is destroyed.
+
+        And now?
+        Everything is destroyed.
+
         <br><br>
+
         The AI has detected extreme sadness levels.
+
         <br><br>
-        Please reconsider your decision 🥺
+
+        Studies show that saying "YES" could instantly
+        repair emotional damage.
+
+        <br><br>
+
+        Please reconsider your decision before it is too late 🥺
     `;
 
     startSadSpeech();
 }
 
-/* ================= CONFETTI (UNCHANGED) ================= */
+/* ================= CONFETTI ================= */
 
 function startConfetti() {
     for (let i = 0; i < 150; i++) {
@@ -89,7 +112,7 @@ function startConfetti() {
     }
 }
 
-/* ================= SAD SPEECH (UNCHANGED) ================= */
+/* ================= SAD SPEECH ================= */
 
 function startSadSpeech() {
     const speeches = [
