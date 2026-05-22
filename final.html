@@ -1,153 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Sokhna Decision</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
 <style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
 body{
+    margin:0;
+    font-family:Arial;
     background:linear-gradient(135deg,#001f3f,#0074D9,#7FDBFF);
-    min-height:100vh;
+    color:white;
     display:flex;
     justify-content:center;
     align-items:center;
-    overflow:hidden;
-    color:white;
-    overflow-y: auto;
-padding: 40px 0;
+    min-height:100vh;
 }
 
 .container{
-    width:90%;
-    max-width:900px;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(15px);
-    border-radius:25px;
-    border:1px solid rgba(255,255,255,0.2);
-    padding:40px;
     text-align:center;
-    box-shadow:0 0 40px rgba(0,0,0,0.3);
-    position:relative;
-}
-
-h1{
-    font-size:45px;
-    margin-bottom:20px;
-}
-
-.subtitle{
-    font-size:22px;
-    opacity:0.9;
-    margin-bottom:40px;
-}
-
-.buttons{
-    display:flex;
-    justify-content:center;
-    gap:20px;
+    width:90%;
+    max-width:800px;
+    background:rgba(255,255,255,0.08);
+    padding:40px;
+    border-radius:20px;
 }
 
 button{
-    padding:18px 40px;
+    padding:15px 30px;
+    margin:10px;
     border:none;
-    border-radius:15px;
-    font-size:22px;
-    font-weight:bold;
+    border-radius:10px;
+    font-size:18px;
     cursor:pointer;
-    transition:0.3s;
 }
 
-button:hover{
-    transform:scale(1.08);
-}
+.yes{background:green;color:white;}
+.no{background:red;color:white;}
 
-.yes{
-    background:#2ECC40;
-    color:white;
-}
+.hidden{display:none;}
 
-.no{
-    background:#FF4136;
-    color:white;
+img{
+    width:250px;
+    margin-top:20px;
+    border-radius:20px;
 }
-
-.hidden{
-    display:none;
-}
-
-.resultImage{
-    width:300px;
-    border-radius:25px;
-    margin-top:25px;
-    box-shadow:0 0 30px rgba(0,0,0,0.4);
-    animation:float 3s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%{
-        transform:translateY(0px);
-    }
-    50%{
-        transform:translateY(-10px);
-    }
-    100%{
-        transform:translateY(0px);
-    }
-}
-
-.message{
-    margin-top:30px;
-    font-size:24px;
-    line-height:1.8;
-}
-
-.character{
-    position:absolute;
-    bottom:20px;
-    right:20px;
-    font-size:90px;
-    animation:bounce 1s infinite;
-}
-
-@keyframes bounce{
-    0%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-15px);
-    }
-    100%{
-        transform:translateY(0);
-    }
-}
-
-.confetti{
-    position:absolute;
-    width:12px;
-    height:12px;
-    background:white;
-    top:-10px;
-    animation:fall linear forwards;
-}
-
-@keyframes fall{
-    to{
-        transform:translateY(110vh) rotate(720deg);
-        opacity:0;
-    }
-}
-
 </style>
 </head>
 
@@ -156,157 +53,54 @@ button:hover{
 <div class="container">
 
     <div id="questionSection">
+        <h1>Final Decision</h1>
+        <p>Are you going to Sokhna?</p>
 
-        <h1>FINAL DECISION</h1>
-
-        <div class="subtitle">
-            You accept going to Sokhna... right? 🌊
-        </div>
-
-        <div class="buttons">
-            <button class="yes" onclick="acceptDecision()">YES</button>
-            <button class="no" onclick="rejectDecision()">NO</button>
-        </div>
-
+        <button class="yes" onclick="acceptDecision()">YES</button>
+        <button class="no" onclick="rejectDecision()">NO</button>
     </div>
 
     <div id="resultSection" class="hidden">
-
-        <img id="resultImage" class="resultImage" src="">
-
-        <div id="message" class="message"></div>
-
-        <div id="character" class="character hidden">
-            🥺
-        </div>
-
+        <img id="resultImage">
+        <h2 id="message"></h2>
     </div>
 
 </div>
 
-<audio id="celebrationSound">
-    <source src="https://www.soundjay.com/human/cheering-01.mp3" type="audio/mpeg">
-</audio>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-emailjs.init("YOUR_PUBLIC_KEY"); // 🔴 replace this
+emailjs.init("_YMl3xFyJ1I_XDZqB"); // 🔴 REPLACE THIS
 
-function sendDecisionEmail(decision) {
-    emailjs.send("service_wecst4h", "template_45fjb61", {
+function sendEmail(decision){
+    emailjs.send("service_oqsq6gn", "template_9tzycye", {
         decision: decision,
         time: new Date().toLocaleString()
     })
-    .then((res) => {
-        console.log("EMAIL SENT ✅", res);
-    })
-    .catch((err) => {
-        console.log("EMAIL ERROR ❌", err);
-    });
+    .then(res => console.log("sent", res))
+    .catch(err => console.log("error", err));
 }
 
-function acceptDecision() {
-    sendDecisionEmail("YES - He accepted Sokhna 🎉");
+function acceptDecision(){
+    sendEmail("YES");
 
     document.getElementById("questionSection").classList.add("hidden");
     document.getElementById("resultSection").classList.remove("hidden");
 
     document.getElementById("resultImage").src = "happy.jpeg";
-
-    document.getElementById("message").innerHTML = `
-        <h2 style="font-size:45px;">LET'S GOOOO 🎉</h2>
-        <br>
-        You have officially made the correct life decision.
-        <br><br>
-        Happiness levels are now increasing rapidly.
-        <br><br>
-        Sokhna trip unlocked successfully 🌊
-    `;
-
-    document.getElementById("celebrationSound").play();
-    startConfetti();
+    document.getElementById("message").innerText = "LET'S GOOOO 🎉 Sokhna is happening!";
 }
 
-function rejectDecision() {
-    sendDecisionEmail("NO - He rejected Sokhna 💔");
+function rejectDecision(){
+    sendEmail("NO");
 
     document.getElementById("questionSection").classList.add("hidden");
     document.getElementById("resultSection").classList.remove("hidden");
 
     document.getElementById("resultImage").src = "sad.jpeg";
-    document.getElementById("character").classList.remove("hidden");
-
-    document.getElementById("message").innerHTML = `
-        <h2 style="font-size:40px;">Look what you have done...</h2>
-        <br>
-        This poor little man was dreaming about Sokhna.
-        <br><br>
-        He imagined the beach... the snacks... the swimming... the memories...
-        <br><br>
-        And now? Everything is destroyed.
-        <br><br>
-        Please reconsider your decision 🥺
-    `;
-
-    startSadSpeech();
-}
-
-function startConfetti() {
-    for (let i = 0; i < 150; i++) {
-        let confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-
-        confetti.style.left = Math.random() * window.innerWidth + "px";
-        confetti.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-        confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-
-        document.body.appendChild(confetti);
-
-        setTimeout(() => {
-            confetti.remove();
-        }, 5000);
-    }
-}
-
-function startSadSpeech() {
-    const speeches = [
-        "You really said no to this innocent child?",
-        "He was already imagining himself at the beach.",
-        "The sadness levels continue to increase.",
-        "Experts say YES was the correct answer.",
-        "Even the AI is disappointed.",
-        "There is still time to fix this."
-    ];
-
-    let i = 0;
-
-    const interval = setInterval(() => {
-        if (i >= speeches.length) {
-            clearInterval(interval);
-            return;
-        }
-
-        let speech = document.createElement("div");
-        speech.style.marginTop = "15px";
-        speech.style.fontSize = "22px";
-        speech.style.opacity = "0";
-
-        speech.innerHTML = "🥺 " + speeches[i];
-
-        document.getElementById("message").appendChild(speech);
-
-        setTimeout(() => {
-            speech.style.transition = "1s";
-            speech.style.opacity = "1";
-        }, 100);
-
-        i++;
-    }, 2500);
+    document.getElementById("message").innerText = "You rejected Sokhna 💔";
 }
 </script>
+
 </body>
 </html>
